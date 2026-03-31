@@ -593,7 +593,8 @@ function viewSCM(){
             `).join('')}
           </div>
         </div>
-        <div style="display:flex;gap:8px;flex-shrink:0">
+        <div style="display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap;align-items:flex-start">
+          ${p.gst_certificate_url?`<a href="${p.gst_certificate_url}" target="_blank" class="btn btn-ghost btn-sm" style="text-decoration:none">📄 GST Cert</a>`:''}
           ${role!=='management'?`
             <button class="btn btn-approve" onclick="openApprove('${p.id}','${esc(p.company_name)}')">✓ Approve</button>
             <button class="btn btn-reject" onclick="openReject('${p.id}','${esc(p.company_name)}')">✕ Reject</button>
@@ -651,7 +652,10 @@ function viewLegal(){
             <span class="status st-${p.status}">${sl(p.status)}</span>
             ${tatBadge(p)}
           </div>
-          ${p.agreement_drive_link?`<div style="margin-top:8px"><a href="${p.agreement_drive_link}" target="_blank" style="color:var(--blue);font-size:11px;font-weight:600">📎 View Agreement</a></div>`:''}
+          <div style="margin-top:8px;display:flex;gap:14px;flex-wrap:wrap">
+            ${p.agreement_drive_link?`<a href="${p.agreement_drive_link}" target="_blank" style="color:var(--blue);font-size:11px;font-weight:600;text-decoration:none">📎 View Agreement</a>`:''}
+            ${p.gst_certificate_url?`<a href="${p.gst_certificate_url}" target="_blank" style="color:var(--purple);font-size:11px;font-weight:600;text-decoration:none">📄 GST Certificate</a>`:''}
+          </div>
         </div>
         <div style="flex:1;min-width:240px;max-width:360px">
           ${legalSteps(p.status)}
@@ -709,7 +713,7 @@ function openDetail(id){
   const rows = [
     ['Ref Number',p.ref_number],['Company',p.company_name],['Registered Address',p.company_address],
     ['Contact Email',p.contact_email],['Contact Phone',p.contact_phone],
-    ['GSTIN',p.gst_number],['PAN',p.pan_number],
+    ['GSTIN',p.gst_number],['GST Certificate',p.gst_certificate_url?`<a href="${p.gst_certificate_url}" target="_blank" style="color:var(--blue);font-weight:600">📄 View Certificate ↗</a>`:'—'],['PAN',p.pan_number],
     ['Bank Account',p.bank_account],['IFSC Code',p.ifsc_code],
     ['Business Interest',p.business_interest],
     ['Signatory',`${p.signatory_name||'—'} (${p.signatory_designation||''})`],
